@@ -30,7 +30,7 @@ cfdisk
 
 ## Formating disk partitions
 ```{r, engine='bash', count_lines}
-mkfs.btrfs /dev/sda1
+mkfs.btrfs /dev/sda1 // or mkfs.ext4 if btrfs doesn't work
 mkswap /dev/sda3
 swapon /dev/sda3
 ```
@@ -38,7 +38,7 @@ swapon /dev/sda3
 ## Mount the file System
 ```{r, engine='bash', count_lines}
 mount /dev/sda1 /mnt
-mkdir /mnt/{boot,home}
+mkdir /mnt/{boot,home} // or mkdir /mnt/boot if not a uefi system
 mount /dev/sda2 /mnt/boot #sda2 is the EFI partition
 ```
 
