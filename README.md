@@ -1,21 +1,15 @@
 Arch Linux and Awesome WM Install Notes
 ===================
-So this install covers a fresh Arch Install with 
-windows ten duel boot. This is installed using UEFI 
-Firmware instead of BIOS firmware. It should work
-the same just without an EFI boot partition and 
-/mnt/boot mount. 
-
-Make sure you install Windows Before Arch. That way
-you don't pull your hair out.
+So this install covers a fresh Arch Install. This is installed using BIOS 
+Firmware instead of UEFI firmware.
 
 # Base Installation
 
 ### Network configuration
-If using Ethernet you can skip this step.
+If using Ethernet, you can skip this step.
 
 Most laptops usually come with an atheros 
-wifi chipset included. If thats the case
+Wi-Fi chipset included. If that’s the case
 use wifi-menu then
 ```{r, engine='bash', count_lines}
 wifi-menu
@@ -27,7 +21,7 @@ ping 8.8.8.8
 ```
 
 ### Verify signature
-This step verify's the image signiture of arch iso to catch malacious images.
+This step verifies the image signature of arch iso to catch malicious images.
 ```{r, engine='bash', count_lines}
 gpg --keyserver-options auto-key-retrieve --verify archlinux-version-x86_64.iso.sig
 ```
@@ -44,11 +38,11 @@ Run command below to partition disks
 ```{r, engine='bash', count_lines}
 cfdisk
 ```
-Create a sda1 partiton and make it bootable<br/>
+Create a sda1 partition and make it bootable<br/>
 Create a sda2 partition for swap<br/>
-Create a sda3 partiton with rest of space for home directory
+Create a sda3 partition with rest of space for home directory
 
-## Formating disk partitions
+## Formatting disk partitions
 For this step you want to format the partitions you just created.<br/>
 For btrfs filesystem run:
 ```{r, engine='bash', count_lines}
@@ -88,7 +82,7 @@ To change enter command:
 vim /etc/pacman.d/mirrorlist
 ```
 
-## Install archlinux base system, Linux Kernel, and firmware.
+## Install arch Linux base system, Linux Kernel, and firmware.
 ```{r, engine='bash', count_lines}
 pacstrap /mnt base linux linux-firmware
 ```
@@ -107,7 +101,7 @@ or
 echo archbox >> /mnt/etc/hostname
 ```
 
-## SetKeyboard Layout
+## Set Keyboard Layout
 Keyboard is preset to US so no change needed. However, 
 if you want to know how to change to non-US keyboards
 check out [Arch Wiki for Details.](https://wiki.archlinux.org/index.php/installation_guide#Set_the_keyboard_layout)
@@ -128,8 +122,8 @@ passwd root
 pacman -S vim man
 ```
 
-## Setting locale and timezone
-Set system timezone to Central US time. Adjust this if in different timezone.
+## Setting locale and time zone
+Set system time zone to Central US time. Adjust this if in different time zone.
 ```{r, engine='bash', count_lines}
 ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
 hwclock --systohc
@@ -148,13 +142,13 @@ echo LANG=en_US.UTF-8 > /etc/locale.conf
 ## Network Configuration
 Add the following to /etc/hosts
 ```{r, engine='bash', count_lines}
-127.0.0.1	localhost
-::1       localhost
-127.0.1.1 archbox.localdomain	archbox
+127.0.0.1   localhost
+::1         localhost
+127.0.1.1   archbox.localdomain	archbox
 ```
 
 ## Wifi-menu and dhcpd configuration.
-Install dhcp and enable the dhcpcd deamon.
+Install dhcp and enable the dhcpcd daemon.
 ```{r, engine='bash', count_lines}
 pacman -S dhcpcd
 systemctl enable dhcpcd
@@ -198,7 +192,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ## Reboot into installed media
 After successfully installing and configuring grub, you can unmount and reboot into the fresh arch install.<br/>
-umount -R unmounts the installed media recursivly. So both /mnt/home /mnt/boot and /mnt
+`umount -R` unmounts the installed media recursively. So both /mnt/home /mnt/boot and /mnt
 would be unmounted.
 
 ```{r, engine='bash', count_lines}
@@ -209,8 +203,8 @@ reboot
 ```
 On reboot windows isn't present but don't worry it will after some configuration.
 
-## Making Windows visable to grub
-In order to make windows visable in grub bootloader you need a package called
+## Making Windows visible to grub
+In order to make windows visible in grub bootloader you need a package called
 OS-Prober. Install:
 ```{r, engine='bash', count_lines}
 pacman -S os-prober
@@ -220,14 +214,14 @@ Now we have to update grub.cfg and reboot to check if windows appear.
 grub-mkconfig -o /boot/grub/grub.cfg
 reboot
 ```
-# Post Installation ==> Installing Awesome WM and Slim Login Manager
+# Post Installation ==> Installing Awesome WM and lightdm Login Manager
 
 ## Updating Pacman
 ```{r, engine='bash', count_lines}
 pacman -Syu
 ```
 
-## Enable 32-bit compatability
+## Enable 32-bit compatibility
 ```{r, engine='bash', count_lines}
 vim /etc/pacman.conf # enable multilib
 pacman -Syu
@@ -265,12 +259,12 @@ Remove yay folder after install
 rm -rf yay/
 ```
 
-## Make wifi connect automatically
+## Make WI-FI connect automatically
 To list interface names type command below then tab and look for something starting with wlp.
 ```{r, engine='bash', count_lines}
 ip link show dev [tab]
 ```
-Enable wifi service using systemctl<br/>
+Enable WI-FI service using systemctl<br/>
 (Assuming 'wlp3s0' is your interface name)
 ```{r, engine='bash', count_lines}
 sudo systemctl enable netctl-auto@wlp3s0.service
@@ -309,7 +303,7 @@ mkdir -p ~/.config/awesome
 cp /etc/xdg/awesome/rc.lua ~/.config/awesome/
 ```
 
-## Installiing and configuring lightDM login manager
+## Installing and configuring lightDM login manager
 Install lightDM
 ```{r, engine='bash', count_lines}
 yay -S lightdm
