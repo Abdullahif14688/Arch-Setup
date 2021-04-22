@@ -237,6 +237,8 @@ Once you reboot annd login, inorder to connect to wifi run the command
 ```{r, engine='bash', count_lines}
 wifi-menu -o
 ````
+If wifi-menu not working then follow the following instructions to get wifi-menu working.
+[Instructions](https://ostechnix.com/fix-job-netctl-service-failed-error-arch-linux/)
 
 
 ### 10. Making Windows visable to grub<a name="windows"></a>
